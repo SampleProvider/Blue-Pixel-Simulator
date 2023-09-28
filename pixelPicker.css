@@ -1,0 +1,103 @@
+
+#pixelPicker {
+    padding: 0px;
+    padding-right: 2px;
+    margin-top: 8px;
+    margin-right: 4px;
+    border: 2px solid white;
+    border-bottom: none;
+}
+.pickerPixel {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin: 2px;
+    border: 2px solid transparent;
+    outline: 2px solid transparent;
+    transition: 50ms linear transform;
+    cursor: pointer;
+}
+.pickerPixel:hover {
+    border-color: white;
+    transform: translateY(-5px);
+}
+.pickerPixelDisabled {
+    cursor: not-allowed !important;
+    opacity: 0.2;
+}
+.pickerPixelSelected {
+    border: 2px solid gold;
+    outline: 2px solid gold;
+}
+.pickerPixelSelected:hover {
+    border-color: gold;
+}
+.pickerLabel {
+    font-weight: 600;
+    display: block;
+    position: relative;
+    margin: 0px;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 0px;
+    border-bottom: 2px solid white;
+    width: 100%;
+    cursor: pointer;
+}
+.pickerLabelImg {
+    margin-top: 2px;
+    margin-right: 2px;
+    height: 14px;
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(221deg) brightness(104%) contrast(105%);
+    transform: rotate(0deg);
+    transition: 200ms ease transform;
+}
+.pickerLabelText {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+}
+.pickerGroup {
+    position: relative;
+    max-height: 2000px;
+    overflow-y: hidden;
+    top: 0px;
+    margin: 0px;
+/*     margin-top: -1.6px; */
+    padding: 0px;
+    width: 100%;
+    transition: 200ms ease-out max-height;
+}
+.pickerGroup:after {
+    position: absolute;
+    content: '';
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 0px;
+    border-top: 2px solid white;
+}
+.pickerGroupContent {
+    position: relative;
+    margin: 2px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    height: fit-content;
+/*     max-height: 1000px; */
+}
+.pickerAmount {
+    position: absolute;
+    right: 2px;
+    bottom: 0px;
+    pointer-events: none;
+}
+#pixelDescription {
+    border: 2px solid white;
+    border-top: none;
+    padding: 4px;
+    padding-right: 2px;
+    margin-top: 0px;
+    margin-right: 4px;
+    height: min-content;
+}

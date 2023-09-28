@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Blue Pixel Simulator</title>
+    <link rel="icon" type="image/x-icon" href="./img/BluePixelSimulator.png">
+    <script src="p5.js"></script>
+    <script>a = true</script>
+    <link href="menu.css" rel="stylesheet" type="text/css" />
+    <link href="transition.css" rel="stylesheet" type="text/css" />
+    <link href="multiplayer.css" rel="stylesheet" type="text/css" />
+    <link href="prompt.css" rel="stylesheet" type="text/css" />
+    <link href="pixelPicker.css" rel="stylesheet" type="text/css" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <!--OG tags-->
+    <meta content="Blue Pixel Simulator" property="og:title" />
+    <meta content="website" property="og:type" />
+    <meta content="Blue Pixel Simulator - It's not red." property="og:description" />
+    <meta content="https://blue-pixel-simulator.maitiansha1.repl.co" property="og:url" />
+    <meta content="https://blue-pixel-simulator.maitiansha1.repl.co/img/BluePixelSimulator.png" property="og:image" />
+    <meta content="640" property="og:image:width" />
+    <meta content="640" property="og:image:height" />
+</head>
+
+<body>
+    <div id="menuScreen">
+        <div id="menuTitleContainer">
+            <div id="menuTitle">
+                <!--                 <img id="menuLogo" src="./img/screenshot.svg" false"> -->
+                <div id="menuLogo">
+                    <canvas id="menuCanvas"></canvas>
+                    <!--                     <div id="menuLogoSP" class="textGlow">SP</div> -->
+                    <!--                     <div id="menuLogoText" class="textGlow">Blue<br>Pixel</div> -->
+                    <!--                     <div id="menuLogoPeriodicTitle" class="textGlow">BP</div>
+                    <div id="menuLogoPeriodicText" class="textGlow">Blue Pixel</div>
+                    <div id="menuLogoPeriodicNumber" class="textGlow">344</div> -->
+                </div>
+                <div id="menuTitleBlue" class="textGlow2">Blue</div>
+                <div id="menuTitlePixel" class="textGlow2">Pixel</div>
+                <!--                 <div id="menuTitlePixel"><span
+                        style="text-decoration: line-through; margin-right: 3vh;">Pixel</span>Circle
+                </div> -->
+                <div id="menuTitleSimulator" class="textGlow2">Simulator</div>
+            </div>
+        </div>
+        <button id="sandboxButton">SANDBOX</button>
+        <button id="puzzlesButton">PUZZLES</button>
+        <button id="multiplayerButton">MULTIPLAYER</button>
+        <div id="puzzleSelect">
+            <div id="puzzleSelectButtons">
+                <h1 style="font-weight: 600;">Puzzles:</h1>
+            </div>
+            <button id="puzzleSelectCancelButton">✖</button>
+        </div>
+        <a id="licenseLink" href="https://opensource.org/license/mit/">Copyright © 2023 MaitianSha under MIT License</a>
+    </div>
+    <div id="gameScreen" style="display: none;">
+        <canvas id="canvas"></canvas>
+        <canvas id="puzzleCanvas"></canvas>
+        <canvas id="brushCanvas"></canvas>
+        <div id="sidebar">
+            <div id="puzzleTitle" class="puzzleTool" style="font-size: 24px; font-weight: 600; display: block;">
+            </div>
+            <div id="puzzleDescription" class="puzzleTool" style="display: block;"></div>
+            <div id="gameTitle" class="gameTool" style="font-size: 24px; font-weight: 600;"></div>
+            <div id="gameDescription" class="gameTool"></div>
+            <div id="pixelPicker"></div>
+            <div id="pixelDescription">
+                <div id="pixelDescriptionName" style="font-size: 16px; font-weight: 600;"></div>
+                <div id="pixelDescriptionText"></div>
+                <br>
+                <div id="pixelDescriptionStatistics"></div>
+            </div>
+            <table id="pixelTable">
+                <tbody>
+                    <tr>
+                        <td style="border: none;">
+                            <button id="runButton" class="controlButton">
+                                <img id="playRunButton" class="controlImg" src="./img/run.svg" draggable="false">
+                                <img id="pauseRunButton" class="controlImg" src="./img/pause.svg" draggable="false">
+                            </button>
+                            <button id="stepButton" class="controlButton" style="background-color: #00ff00;">
+                                <img class="controlImg" src="./img/step.svg" draggable="false">
+                            </button>
+                            <button id="simulateButton" class="controlButton">
+                                <img id="playSimulateButton" class="controlImg" src="./img/simulate.svg"
+                                    draggable="false">
+                                <img id="pauseSimulateButton" class="controlImg" src="./img/pause.svg"
+                                    draggable="false">
+                            </button>
+                            <button id="slowmodeButton" class="controlButton">
+                                <img id="playSlowmodeButton" class="controlImg" src="./img/slowmode.svg"
+                                    draggable="false">
+                                <img id="pauseSlowmodeButton" class="controlImg" src="./img/pause.svg"
+                                    draggable="false">
+                            </button>
+                            <button id="resetButton" class="controlButton">
+                                <img class="controlImg" src="./img/reset.svg" draggable="false">
+                            </button>
+                            <br>
+                            <span id="fpsDisplay" style="display: inline-block; width: 75px;">FPS: 0;</span>
+                            <span id="tickDisplay" style="display: inline-block;">Tick: 0;</span>
+                            <br>
+                            <button id="downloadButton" class="controlButton">
+                                <img class="controlImg" src="./img/download.svg" draggable="false">
+                            </button>
+                            <button id="uploadButton" class="controlButton">
+                                <img class="controlImg" src="./img/upload.svg" draggable="false">
+                            </button>
+                            <button id="screenshotButton" class="controlButton">
+                                <img class="controlImg" src="./img/screenshot.svg" draggable="false">
+                            </button>
+                            <button id="restartButton" class="controlButton">
+                                <img class="controlImg" src="./img/restart.svg" draggable="false">
+                            </button>
+                            <button id="menuButton" class="controlButton">
+                                <img class="controlImg" src="./img/menu.svg" draggable="false">
+                            </button>
+                            <br>
+                            <button id="copyButton" class="controlExpandButton">
+                                Copy Save Code
+                            </button>
+                            <button id="pasteButton" class="controlExpandButton">
+                                Paste Save Code
+                            </button>
+                            <button id="changeGridSizeButton" class="controlExpandButton sandboxTool">
+                                Change Grid Size
+                            </button>
+                            <button id="setInitialStateButton" class="controlExpandButton sandboxTool">
+                                Set Initial State
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="winScreen">
+            <div id="winTitle">Puzzle Complete!</div>
+            <button id="winReset" class="winButton">RESET</button>
+            <button id="winNext" class="winButton">NEXT</button>
+            <button id="winMenu" class="winButton">MENU</button>
+        </div>
+    </div>
+    <div id="promptContainer">
+        <div id="prompt">
+            <h1 id="promptTitle" style="color: white;"></h1>
+            <div id="promptMessage" style="display: none; font-size: 16px; font-weight: 600;"></div>
+            <div id="promptError" style="display: none; color: #ff0000; font-weight: 600;"></div>
+            <input id="promptInput" type="number">
+            <br>
+            <button id="promptOk" class="promptButton" style="display: none;">OK</button>
+            <button id="promptYes" class="promptButton" style="display: none; background-color: #00ff00;">YES</button>
+            <button id="promptNo" class="promptButton" style="display: none; background-color: #ff0000;">NO</button>
+        </div>
+    </div>
+    <div id="transitionContainer" style="visibility: hidden;">
+        <div id="transitionBottom"></div>
+        <div id="transitionTop">
+            <div id="transitionLogo"></div>
+            <div id="transitionTitle" class="textGlow2">
+                Blue Pixel
+                <br>
+                Simulator
+            </div>
+        </div>
+    </div>
+    <div id="loadingScreen" style="visibility: hidden;">
+        <div id="loadingLogo"></div>
+        <div id="loadingTitle" class="textGlow2">
+            Blue Pixel
+            <br>
+            Simulator
+        </div>
+        <div id="loadingText" class="textGlow"></div>
+    </div>
+    <div id="multiplayerScreen" style="display: none;">
+        <div id="activeGames">
+            <div style="margin-left: 4px; font-size: 20px; font-weight: 600; ">Active Games:</div>
+            <div id="activeGameList">
+                <div class="game">
+                    <div class="gameResults">🌟<span style="font-weight: 600">sp</span> (1600) <span
+                            style="color: #99ff99">+15</span> vs <span style="font-weight: normal">ovrbord</span> (1100)
+                        <span style="color: #ff9999">-214</span>
+                    </div>
+                    <div class="gameStatistics">Vault Wars, Best of 5</div>
+                    <div class="gameStatus">
+                        <div>Finished</div>
+                    </div>
+                    <div class="gameScore">
+                        <div>5-0</div>
+                    </div>
+                    <div class="gameControls">
+                        <div class="multiplayerButton viewGame">
+                            <div>View</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game">
+                    <div class="gameResults"><span style="font-weight: normal">green grep</span> (1300) <span
+                            style="color: #ff9999">-12</span> vs 🌟<span style="font-weight: 600">tianmu</span> (1200)
+                        <span style="color: #99ff99">+13</span>
+                    </div>
+                    <div class="gameStatistics">Vault Wars, Best of 3</div>
+                    <div class="gameStatus">
+                        <div>Finished</div>
+                    </div>
+                    <div class="gameScore">
+                        <div>1-2</div>
+                    </div>
+                    <div class="gameControls">
+                        <div class="multiplayerButton viewGame">
+                            <div>View</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game">
+                    <div class="gameResults"><span style="font-weight: normal">sp</span> (1600) vs <span
+                            style="font-weight: normal">SPAARK</span> (???)
+                    </div>
+                    <div class="gameStatistics">Music Battles, Best of 1</div>
+                    <div class="gameStatus gameError">
+                        <div>Error</div>
+                    </div>
+                    <div class="gameScore gameError">
+                        <div>Error</div>
+                    </div>
+                    <div class="gameControls">
+                        <div class="multiplayerButton viewGame">
+                            <div>View</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="createGame">
+            <div style="margin-top: 4px; font-size: 20px; font-weight: 600; ">Create a Game:</div>
+            <div id="createGameMode">
+                <div id="backGameMode">
+                    <img class="gameModeImg" src="./img/left.svg">
+                </div>
+                <div id="currentGameMode">
+                    <div>Vault Wars</div>
+                </div>
+                <div id="nextGameMode">
+                    <img class="gameModeImg" src="./img/right.svg">
+                </div>
+            </div>
+            <div id="createGameModeDescription"></div>
+            <div id="createGameOptions">
+                <div id="publicGame" class="createGameOptionsToggleSlider" style="transform: translateX(21px);">
+                    <div style="display: inline-block;">Public Game:</div>
+                    <div id="publicGameSlider" class="toggleSlider"></div>
+                </div>
+                <div id="allowSpectators" class="createGameOptionsToggleSlider">
+                    <div style="display: inline-block; margin-top: -2px;">Allow Spectators:</div>
+                    <div id="allowSpectatorsSlider" class="toggleSlider"></div>
+                </div>
+                <div id="ranked" class="createGameOptionsToggleSlider" style="transform: translateX(42px);">
+                    <div style="display: inline-block; margin-top: -2px;">Ranked:</div>
+                    <div id="rankedSlider" class="toggleSlider"></div>
+                </div>
+            </div>
+            <div id="createGameModeButton" class="multiplayerButton">
+                <div style="font-size: 20px; font-weight: 600;">Create Game</div>
+            </div>
+        </div>
+        <div id="multiplayerPuzzles" style="display: none;">
+            <div style="margin-left: 4px; font-size: 20px; font-weight: 600; ">Puzzles:</div>
+        </div>
+        <div id="multiplayerLeaderboard" style="display: none;">
+            <div style="margin-left: 4px; font-size: 20px; font-weight: 600; ">Leaderboard:</div>
+        </div>
+        <div id="multiplayerHeading">
+            <div id="multiplayerLogo"></div>
+            <div id="multiplayerTitle">
+                Blue Pixel
+                <br>
+                Simulator
+            </div>
+            <div id="multiplayerGamesButton" class="multiplayerButton multiplayerHeadingButton">
+                <div class="centeredText multiplayerHeadingButtonText">Games</div>
+            </div>
+            <div id="multiplayerPuzzlesButton" class="multiplayerButton multiplayerHeadingButton">
+                <div class="centeredText multiplayerHeadingButtonText">Puzzles</div>
+            </div>
+            <div id="multiplayerLeaderboardButton" class="multiplayerButton multiplayerHeadingButton">
+                <div class="centeredText multiplayerHeadingButtonText">Leaderboard</div>
+            </div>
+            <div id="accountDropdown">
+                <div id="accountButton" class="multiplayerButton accountButton">
+                    <div id="accountButtonText" class="centeredText multiplayerHeadingButtonText">Not Signed In</div>
+                    <img id="accountDropdownImg" src="./img/down.svg">
+                </div>
+                <div id="accountDropdownContent">
+                    <div id="multiplayerAccountSignIn" class="multiplayerButton accountButton">
+                        <div class="centeredText multiplayerHeadingButtonText">Sign In</div>
+                    </div>
+                    <div id="multiplayerAccountCreateAccount" class="multiplayerButton accountButton">
+                        <div class="centeredText multiplayerHeadingButtonText">Create Account</div>
+                    </div>
+                    <div id="multiplayerAccountMenu" class="multiplayerButton accountButton">
+                        <div class="centeredText multiplayerHeadingButtonText">Menu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accountContainer">
+            <div id="accountPrompt">
+                <div id="accountTitle"></div>
+                <div id="accountMessage"></div>
+                <div id="accountUsernameText" class="accountText">
+                    Username: <input id="accountUsername" class="accountInput" type="text" maxlength="20">
+                </div>
+                <div id="accountPasswordText" class="accountText">
+                    Password: <input id="accountPassword" class="accountInput" type="password" maxlength="20">
+                </div>
+                <div id="accountPasswordConfirmText" class="accountText">
+                    Retype Password: <input id="accountPasswordConfirm" class="accountInput" type="password"
+                        maxlength="20">
+                </div>
+                <button id="accountYes" class="accountPromptButton" style="background-color: #00ff00;"></button>
+                <button id="accountCancel" class="accountPromptButton"
+                    style="background-color: #ff0000;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="functions.js"></script>
+<script src="pixelIds.js"></script>
+<script src="pixelSetup.js"></script>
+<script src="colors.js"></script>
+<script src="pixelData1.js"></script>
+<script src="transition.js"></script>
+<script src="prompt.js"></script>
+<script src="grid.js"></script>
+<script src="camera.js"></script>
+<script src="brush.js"></script>
+<script src="music.js"></script>
+<script src="pixel.js"></script>
+<script src="pixelPicker.js"></script>
+<script src="puzzles.js"></script>
+<script src="ui.js"></script>
+<script src="multiplayer.js"></script>
+<script src="inputs.js"></script>
+<script src="menu.js"></script>
+
+</html>

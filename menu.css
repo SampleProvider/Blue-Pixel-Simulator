@@ -1,0 +1,463 @@
+#menuTitleContainer {
+    transform: translateY(0vh);
+    transition: 900ms ease transform;
+}
+#menuTitle {
+    position: relative;
+    top: 25vh;
+    left: calc(46vw - 30vh);
+    width: fit-content;
+    color: #ffffff;
+    text-align: left;
+    will-change: transform;
+}
+@keyframes menuTitleShift {
+    0% {
+        transform: translateY(0vh);
+    }
+    100% {
+        transform: translateY(-15vh);
+    }
+}
+@keyframes menuTitle {
+    0% {
+        transform: translateY(-15vh);
+    }
+    50% {
+        transform: translateY(-12vh);
+    }
+    100% {
+        transform: translateY(-15vh);
+    }
+}
+#menuLogo {
+    position: absolute;
+    top: 0vh;
+    left: 0vh;
+/*     top: 25vh; */
+/*     left: calc(45.5vw - 24vh); */
+    width: 30vh;
+    height: 30vh;
+/*     border-radius: 50%; */
+/*     width: 0;
+    height: 0;
+    border-left: 12vh solid transparent;
+    border-right: 12vh solid transparent;
+    border-bottom: 20.784vh solid rgb(50, 50, 255); */
+    background-color: rgb(50, 50, 255);
+    box-shadow:
+        0px 0px 2vh rgba(50, 50, 255, 0.7),
+        0px 0px 4vh rgba(50, 50, 255, 0.7);
+/*         0px 0px 6vh rgba(50, 50, 255, 0.7),
+        0px 0px 8vh rgba(50, 50, 255, 0.7),
+        0px 0px 10vh rgba(50, 50, 255, 0.7); */
+/*     animation: menuLogo 1s; */
+    animation: menuLogoStart 1s infinite;
+/*     animation: menuLogo 1s, menuLogoGlow 3s ease infinite; */
+    animation-timing-function: cubic-bezier(0.25, 0.05, 1, 0.75);
+}
+@keyframes menuLogoStart {
+    0%, 100% {
+        width: 30vh;
+        height: 30vh;
+        transform: translate(-50vw, 0vh) rotate(720deg);
+        animation-timing-function: cubic-bezier(0.25, 0.05, 1, 0.75);
+    }
+}
+@keyframes menuLogo {
+    0% {
+        width: 30vh;
+        height: 30vh;
+        transform: translate(-50vw, 0vh) rotate(720deg);
+        animation-timing-function: cubic-bezier(0.25, 0.05, 1, 0.75);
+    }
+    50% {
+        transform: translate(-10vw, -3vh);
+        width: 37.5vh;
+        height: 37.5vh;
+        animation-timing-function: ease;
+    }
+    100% {
+        transform: translate(0vw, 0vh) rotate(0deg);
+        width: 30vh;
+        height: 30vh;
+    }
+}
+@keyframes menuLogoGlow {
+    0% {
+        box-shadow:
+            0px 0px 2vh rgba(50, 50, 255, 0.7),
+            0px 0px 4vh rgba(50, 50, 255, 0.7);
+/*             0px 0px 6vh rgba(50, 50, 255, 0.7),
+            0px 0px 8vh rgba(50, 50, 255, 0.7),
+            0px 0px 10vh rgba(50, 50, 255, 0.7); */
+    }
+    50% {
+        box-shadow:
+            0px 0px 2vh rgba(50, 50, 255, 0.5),
+            0px 0px 4vh rgba(50, 50, 255, 0.5);
+/*             0px 0px 6vh rgba(50, 50, 255, 0.5),
+            0px 0px 8vh rgba(50, 50, 255, 0.5); */
+    }
+    100% {
+        box-shadow:
+            0px 0px 2vh rgba(50, 50, 255, 0.7),
+            0px 0px 4vh rgba(50, 50, 255, 0.7);
+/*             0px 0px 6vh rgba(50, 50, 255, 0.7),
+            0px 0px 8vh rgba(50, 50, 255, 0.7),
+            0px 0px 10vh rgba(50, 50, 255, 0.7); */
+    }
+}
+#menuCanvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+#menuLogoSP {
+    position: absolute;
+    top: -0.5vh;
+    left: 23vh;
+    will-change: transform;
+    font-size: 5vh;
+    font-weight: 600;
+/*     animation: menuLogoSP 1s; */
+}
+#menuLogoText {
+    position: absolute;
+    top: 14.5vh;
+    left: 0.5vh;
+    will-change: transform;
+    font-size: 9vh;
+    line-height: 7.5vh;
+    font-weight: 600;
+/*     animation: menuLogoText 1s; */
+}
+@keyframes menuLogoSP {
+    0% {
+        top: -0.5vh;
+        left: 23vh;
+        font-size: 5vh;
+    }
+    50% {
+        top: -0.625vh;
+        left: 28.75vh;
+        font-size: 6.25vh;
+    }
+    100% {
+        top: -0.5vh;
+        left: 23vh;
+        font-size: 5vh;
+    }
+}
+@keyframes menuLogoText {
+    0% {
+        top: 14.5vh;
+        left: 0.5vh;
+        font-size: 9vh;
+        line-height: 7.5vh;
+    }
+    50% {
+        top: 17.96875vh;
+        left: 0.625vh;
+        font-size: 10.9375vh;
+        line-height: 9.375vh;
+    }
+    100% {
+        top: 14.5vh;
+        left: 0.5vh;
+        font-size: 9vh;
+        line-height: 7.5vh;
+    }
+}
+#menuLogoPeriodicTitle {
+    position: absolute;
+    top: 7vh;
+    left: 15vh;
+    font-size: 12.5vh;
+    font-weight: 600;
+    will-change: transform;
+/*     animation: menuLogoPeriodicTitle 1s; */
+    transform: translateX(-50%);
+}
+#menuLogoPeriodicText {
+    position: absolute;
+    top: 24vh;
+    left: 15vh;
+    font-size: 4.5vh;
+    font-weight: 600;
+    will-change: transform;
+    white-space: nowrap;
+/*     animation: menuLogoPeriodicText 1s; */
+    transform: translateX(-50%);
+}
+#menuLogoPeriodicNumber {
+    position: absolute;
+    top: 0vh;
+    left: 1.25vh;
+    font-size: 4vh;
+    font-weight: 600;
+    will-change: transform;
+/*     animation: menuLogoPeriodicNumber 1s; */
+}
+@keyframes menuLogoPeriodicTitle {
+    0% {
+        top: 7vh;
+        left: 15vh;
+        font-size: 12.5vh;
+    }
+    50% {
+        top: 8.75vh;
+        left: 18.75vh;
+        font-size: 15.625vh;
+    }
+    100% {
+        top: 7vh;
+        left: 15vh;
+        font-size: 12.5vh;
+    }
+}
+@keyframes menuLogoPeriodicText {
+    0% {
+        top: 24vh;
+        left: 15vh;
+        font-size: 4.5vh;
+    }
+    50% {
+        top: 30vh;
+        left: 18.75vh;
+        font-size: 5.625vh;
+    }
+    100% {
+        top: 24vh;
+        left: 15vh;
+        font-size: 4.5vh;
+    }
+}
+@keyframes menuLogoPeriodicNumber {
+    0% {
+        left: 1.25vh;
+        font-size: 4vh;
+    }
+    50% {
+        left: 1.5625vh;
+        font-size: 5vh;
+    }
+    100% {
+        left: 1.25vh;
+        font-size: 4vh;
+    }
+}
+#menuTitleBlue {
+    position: absolute;
+    top: -1vh;
+    left: 31.5vh;
+/*     top: 25vh; */
+/*     left: 46.5vw; */
+    will-change: transform;
+    font-size: 10vh;
+    font-weight: 600;
+/*     font-weight: 600; */
+    animation: menuTitleTextStart 1s infinite;
+/*     animation: 0.5s 1s menuTitleTextSlide; */
+    animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+}
+#menuTitlePixel {
+    position: absolute;
+    top: 9vh;
+    left: 31.5vh;
+/*     top: 33vh;
+    left: 46.5vw; */
+    will-change: transform;
+    font-size: 10vh;
+    font-weight: 600;
+/*     font-weight: 600; */
+    animation: menuTitleTextStart 1s infinite;
+/*     animation: menuTitlePixel 2s; */
+    animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+}
+#menuTitleSimulator {
+    position: absolute;
+    top: 19vh;
+    left: 31.5vh;
+/*     top: 41vh;
+    left: 46.5vw; */
+    will-change: transform;
+    font-size: 10vh;
+    font-weight: 600;
+/*     font-weight: 600; */
+/*     animation: menuTitleSimulator 2.5s; */
+    animation: menuTitleTextStart 1s infinite;
+    animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+}
+@keyframes menuTitleTextStart {
+    0%, 100% {
+        transform: translateX(57vw);
+    }
+}
+@keyframes menuTitleTextSlide {
+    0% {
+        transform: translateX(57vw);
+    }
+    100% {
+        transform: translateX(0vw);
+    }
+}
+.textGlow {
+    text-shadow:
+        0px 0px 2vh rgba(255, 255, 255, 0.7);
+/*         0px 0px 4vh rgba(255, 255, 255, 0.7),
+        0px 0px 6vh rgba(255, 255, 255, 0.7); */
+}
+.textGlow2 {
+    text-shadow: 
+        0px 0px 2vh rgba(255, 255, 255, 0.5),
+        -0.5vh 0.5vh 0vh rgba(255, 255, 255, 0.3);
+/*     text-shadow:
+        0px 0px 2vh rgba(255, 255, 255, 0.7),
+        0px 0px 4vh rgba(255, 255, 255, 0.7); */
+/*         0px 0px 6vh rgba(255, 255, 255, 0.7); */
+}
+#sandboxButton {
+    bottom: 35vh;
+    animation: menuButtonStart 1s infinite;
+/*     animation: menuButton 5s ease; */
+}
+#puzzlesButton {
+    bottom: 23vh;
+    animation: menuButtonStart 1s infinite;
+/*     animation: menuButton 5.5s ease; */
+}
+#multiplayerButton {
+    bottom: 11vh;
+    animation: menuButtonStart 1s infinite;
+/*     animation: menuButton 6s ease; */
+}
+#sandboxButton, #puzzlesButton, #multiplayerButton {
+    position: absolute;
+    left: 50vw;
+    width: 30vw;
+    height: 8vh;
+/*     padding-top: -2vh; */
+    vertical-align: middle;
+    font-size: 5vh;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow:
+        0px 0px 2vh rgba(255, 215, 0, 0.7),
+        0px 0px 4vh rgba(255, 215, 0, 0.7);
+/*         0px 0px 6vh rgba(255, 215, 0, 0.7); */
+    border: 1vh outset gold;
+    background-color: goldenrod;
+    transform: translateX(-50%);
+/*     transition: 500ms ease transform; */
+}
+#sandboxButton:active, #puzzlesButton:active, #multiplayerButton:active {
+    border-style: inset;
+}
+@keyframes menuButtonStart {
+    0%, 100% {
+        transform: translate(-50%, 60vh);
+        visibility: hidden;
+    }
+}
+@keyframes menuButton {
+    0% {
+        transform: translate(-50%, 60vh);
+        visibility: hidden;
+    }
+    80% {
+        transform: translate(-50%, 60vh);
+        visibility: inherit;
+    }
+    100% {
+        transform: translate(-50%, 0vh);
+    }
+}
+@keyframes menuButtonHide {
+    0% {
+    }
+    100% {
+        transform: translate(-50%, 50vh);
+    }
+}
+#puzzleSelect {
+    visibility: hidden;
+    position: absolute;
+    display: inline-block;
+    left: 50vw;
+    top: 15vh;
+    bottom: 15vh;
+    width: 50vw;
+    padding: 0px;
+    font-weight: 600;
+    border: 4px solid white;
+    color: white;
+    background-color: #333333;
+    text-align: center;
+    transform: translate(-50%, -85vh);
+    transition: 500ms ease transform;
+}
+#puzzleSelectButtons {
+    position: absolute;
+    display: inline-block;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    padding: 0px;
+/*     overflow-x: hidden; */
+    overflow-y: scroll;
+}
+#puzzleSelectButtons::-webkit-scrollbar {
+    width: 0px;
+}
+.puzzleSelectTitle {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.puzzleSelectGroup {
+    display: inline-block;
+/*     width: fit-content; */
+/*     white-space: nowrap; */
+    margin-top: 4px;
+    text-align: center;
+}
+.puzzleSelectButton {
+    width: 100px;
+    height: fit-content;
+/*     padding: 4px; */
+/*     margin: 4px 4px;
+    padding: 4px 4px; */
+/*     font: 16px Arial;
+    font-weight: 600er; */
+    margin: 4px 4px;
+/*     padding: 2px;
+    padding-bottom: 4px; */
+/*     border-color: #AAAAAA;
+    background-color: #DDDDDD; */
+/*     font-weight: normal; */
+/*     font-size: 5vh; */
+}
+#puzzleSelectCancelButton {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    margin: 4px 4px;
+    padding: 4px 4px;
+    font: 16px Arial;
+    font-weight: 600;
+    line-height: 10px;
+    text-align: center;
+    vertical-align: center;
+    background-color: red;
+    border-color: crimson;
+    transform: translate(40%, -40%);
+}
+#licenseLink {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+}

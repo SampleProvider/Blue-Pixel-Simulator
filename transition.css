@@ -1,0 +1,70 @@
+
+#transitionContainer {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+/*     width: 100vw;
+    height: 100vh; */
+    z-index: 5;
+}
+#transitionTop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100vw;
+    height: 50vh;
+    background-color: #282828;
+/*     border-bottom: 4px solid #111111; */
+    text-align: center;
+    transition: 300ms ease-in transform;
+    transform: translateY(-60vh);
+}
+#transitionBottom {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100vw;
+    height: 50vh;
+    background-color: #282828;
+/*     border-top: 4px solid #111111; */
+    transition: 300ms ease-in transform;
+    transform: translateY(60vh);
+}
+#transitionTitle {
+    position: absolute;
+    left: 45vw;
+    top: 50vh;
+    color: #ffffff;
+    font-size: 6vh;
+    font-weight: 600;
+    line-height: 6vh;
+    text-align: left;
+/*     vertical-align: middle; */
+/*     text-shadow:
+        0px 0px 2vh rgba(255, 255, 255, 0.7),
+        0px 0px 4vh rgba(255, 255, 255, 0.7),
+        0px 0px 6vh rgba(255, 255, 255, 0.7); */
+    transform: translateY(-50%);
+}
+#transitionLogo {
+    position: absolute;
+    left: calc(44vw - 12vh);
+    top: 44vh;
+    vertical-align: middle;
+    width: 12vh;
+    height: 12vh;
+    background-color: rgb(50, 50, 255);
+    box-shadow:
+        0px 0px 4vh rgba(50, 50, 255, 0.7);
+/*         0px 0px 2vh rgba(50, 50, 255, 0.7), */
+/*     box-shadow:
+        0px 0px 1vh rgba(50, 50, 255, 0.7),
+        0px 0px 2vh rgba(50, 50, 255, 0.7),
+        0px 0px 3vh rgba(50, 50, 255, 0.7),
+        0px 0px 4vh rgba(50, 50, 255, 0.7),
+        0px 0px 5vh rgba(50, 50, 255, 0.7); */
+}

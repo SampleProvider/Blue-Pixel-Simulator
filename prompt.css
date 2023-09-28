@@ -1,0 +1,47 @@
+
+#promptContainer {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+/*     width: 100vw;
+    height: 100vh; */
+    background-color: #0005;
+    opacity: 0;
+    transition: 500ms linear opacity;
+    pointer-events: none;
+    z-index: 4;
+}
+#prompt {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    width: 50vw;
+    height: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 4px solid white;
+    color: white;
+/*     background-color: lightgray; */
+    background-color: #333333;
+    text-align: center;
+    transform: translate(-50%, -100vh);
+    transition: 500ms ease transform;
+}
+#promptInput {
+/*     font-family: 'Courier New', Courier, monospace; */
+    font-family: "Source Code Pro", Courier, monospace;
+    font-weight: 600;
+    font-size: 20px;
+    display: inline-block;
+    width: 50%;
+    height: 20px;
+    background-color: #aaaaaa;
+    outline: none;
+}
+.promptButton {
+    width: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
