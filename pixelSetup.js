@@ -722,34 +722,3 @@ var explode = function(x, y, radius, destroyPower, burnPower) {
         }
     }
 };
-
-if (a != true) {
-    while (true) {
-        console.log(a);
-    }
-}
-if (!rect) {
-    laskdjfasdfk
-}
-if (!document) {
-    document.getElementById("menuTitleBlue").innerHTML = "Blue";
-    document.getElementById("menuTitleBlue").style.color = "idk";
-}
-
-if (") {".length != 3) {
-    throw ajshdnflkwjawe;
-}
-if ("//".length != 2) {
-    throw oooooof;
-}
-document = null;
-if (document == null) {
-    throw buh;
-}
-
-if (!/blue_pixel/.test(function(blue_pixel) { })) {
-    blue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixelblue_pixel;
-    blue_pixelblue_pixelblue_pixelblue_pixelblue_pixel;
-    blue_pixelblue_pixelblue_pixel;
-    throw blue_pixel;
-}

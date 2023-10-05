@@ -69,9 +69,33 @@ var pixelIds = [
 for (var i = 0; i < pixelIds.length; i++) {
     eval(`${pixelIds[i]}=${i};`);
 }
-var noRotationPixelIds = [];
-for (var i = 0; i < pixels.length; i++) {
-    for (var j = 0; j < pixels[i].rotateable; j++) {
-        noRotationPixelIds.push(pixelIds[i]);
+
+var pixsimIds = {};
+var pixsimToGame = [];
+var gameToPixsim = [];
+var pixsimToRotation = [];
+for (var i = 0, j = 0; i < pixels.length; i++) {
+    gameToPixsim.push(j);
+    if (pixels[i].rotateable > 1) {
+        for (var k = 0; k < pixels[i].rotateable; k++, j++) {
+            pixsimIds[pixelIds[i] + k] = i;
+            pixsimToGame.push(i);
+            pixsimToRotation.push(k);
+        }
+    } else {
+        pixsimIds[pixelIds[i]] = i;
+        pixsimToGame.push(i);
+        pixsimToRotation.push(0);
+        j++;
     }
 }
+
+var getPixSimId = function(id, rotation) {
+    return gameToPixsim[id] + rotation;
+};
+var getGameId = function(pixsimId) {
+    return pixsimToGame[pixsimId];
+};
+var getGameRotation = function(pixsimId) {
+    return pixsimToRotation[pixsimId];
+};
