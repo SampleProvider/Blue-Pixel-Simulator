@@ -5289,6 +5289,11 @@ var pixels = [
         blastResistance: 2,
     },
 ];
+
+for (var i = 0; i < pixelIds.length; i++) {
+    eval(`${pixelIds[i]}=${i};`);
+}
+
 var oscillatorNames = [[]];
 var oscillatorDescriptions = [[]];
 var oscillatorTypes = ["Square", "Triangle", "Sawtooth", "Sine", "Custom 1"];
@@ -5303,10 +5308,6 @@ for (var i in oscillatorTypes) {
 
 pixels[OSCILLATOR].name = oscillatorNames;
 pixels[OSCILLATOR].description = oscillatorDescriptions;
-
-for (var i = 0; i < pixelIds.length; i++) {
-    eval(`${pixelIds[i]}=${i};`);
-}
 
 var pixsimToGame = [];
 var gameToPixsim = [];
@@ -5324,7 +5325,6 @@ for (var i = 0, j = 0; i < pixels.length; i++) {
         j++;
     }
 }
-let p = []; let k = 0; for (let i in pixelIds) { if (pixels[i] == undefined) continue; if (pixels[i].rotateable > 0) { for (let j = 0; j < pixels[i].rotateable; j++) { p[pixelIds[i] + j] = k++; } } else { p[pixelIds[i]] = k++; } } return p;
 
 var getPixSimId = function(id, rotation) {
     return gameToPixsim[id] + rotation;
