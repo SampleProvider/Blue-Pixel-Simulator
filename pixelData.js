@@ -1,3 +1,71 @@
+var pixelIds = [
+    "AIR",
+    "DIRT",
+    "GRASS",
+    "SAND",
+    "WATER",
+    "OAK_WOOD",
+    "LEAF",
+    "MUD",
+    "DRIED_MUD",
+    "VINE",
+    "MOSS",
+    "SPONGE",
+    "GLASS",
+    "REINFORCED_GLASS",
+    "LAVA",
+    "FIRE",
+    "SMOKE",
+    "ASH",
+    "HARDENED_ASH",
+    "STEAM",
+    "MAGMA",
+    "STONE",
+    "BASALT",
+    "OBSIDIAN",
+    "SNOW",
+    "ICE",
+    "SLUSH",
+    "SPRUCE_WOOD",
+    "PUSHER",
+    "PULLER",
+    "DRILLER",
+    "PENETRATOR",
+    "COPIER",
+    "CONVERTER",
+    "CLONER",
+    "FAN",
+    "ROTATOR",
+    "GRABBER_ROTATOR",
+    "DIRECTIONAL_ROTATOR",
+    "DELETER",
+    "SLIDER",
+    "COLLAPSABLE",
+    "GUNPOWDER",
+    "DYNAMITE",
+    "IGNITOR",
+    "LASER_EXPLOSIVE",
+    "RED_LASER",
+    "GREEN_LASER",
+    "BLUE_LASER",
+    "MIRROR",
+    "LASER_SCATTERER",
+    "LASER_TUNNEL",
+    "RED_SAND",
+    "PINK_SAND",
+    "SPONGY_RICE",
+    "OSCILLATOR",
+    "OSCILLATOR_TUNER",
+    "DRUM",
+    "ALLOW_PLACEMENT",
+    "RESTRICT_PLACEMENT",
+    "GOAL",
+    "TARGET",
+    "MONSTER",
+    "PIXELITE_CRYSTAL",
+    "CORRUPTION",
+];
+
 var pixels = [
     {
         name: "Air",
@@ -5235,3 +5303,35 @@ for (var i in oscillatorTypes) {
 
 pixels[OSCILLATOR].name = oscillatorNames;
 pixels[OSCILLATOR].description = oscillatorDescriptions;
+
+for (var i = 0; i < pixelIds.length; i++) {
+    eval(`${pixelIds[i]}=${i};`);
+}
+
+var pixsimToGame = [];
+var gameToPixsim = [];
+var pixsimToRotation = [];
+for (var i = 0, j = 0; i < pixels.length; i++) {
+    gameToPixsim.push(j);
+    if (pixels[i].rotateable > 1) {
+        for (var k = 0; k < pixels[i].rotateable; k++, j++) {
+            pixsimToGame.push(i);
+            pixsimToRotation.push(k);
+        }
+    } else {
+        pixsimToGame.push(i);
+        pixsimToRotation.push(0);
+        j++;
+    }
+}
+let p = []; let k = 0; for (let i in pixelIds) { if (pixels[i] == undefined) continue; if (pixels[i].rotateable > 0) { for (let j = 0; j < pixels[i].rotateable; j++) { p[pixelIds[i] + j] = k++; } } else { p[pixelIds[i]] = k++; } } return p;
+
+var getPixSimId = function(id, rotation) {
+    return gameToPixsim[id] + rotation;
+};
+var getGameId = function(pixsimId) {
+    return pixsimToGame[pixsimId];
+};
+var getGameRotation = function(pixsimId) {
+    return pixsimToRotation[pixsimId];
+};
