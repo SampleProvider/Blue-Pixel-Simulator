@@ -5309,20 +5309,23 @@ for (var i in oscillatorTypes) {
 pixels[OSCILLATOR].name = oscillatorNames;
 pixels[OSCILLATOR].description = oscillatorDescriptions;
 
+var pixsimIds = {};
 var pixsimToGame = [];
 var gameToPixsim = [];
 var pixsimToRotation = [];
 for (var i = 0, j = 0; i < pixels.length; i++) {
+    if (pixels[i] == undefined) continue;
     gameToPixsim.push(j);
     if (pixels[i].rotateable > 1) {
         for (var k = 0; k < pixels[i].rotateable; k++, j++) {
+            pixsimIds[pixelIds[i].toLowerCase() + k] = j;
             pixsimToGame.push(i);
             pixsimToRotation.push(k);
         }
     } else {
+        pixsimIds[pixelIds[i].toLowerCase()] = j++;
         pixsimToGame.push(i);
         pixsimToRotation.push(0);
-        j++;
     }
 }
 
@@ -5334,4 +5337,10 @@ var getGameId = function(pixsimId) {
 };
 var getGameRotation = function(pixsimId) {
     return pixsimToRotation[pixsimId];
+};
+var getGameIdString = function(pixsimIdString) {
+    return pixsimToGame[pixsimIds[pixsimIdString]];
+};
+var getGameRotationString = function(pixsimIdString) {
+    return pixsimToRotation[pixsimIds[pixsimIdString]];
 };
