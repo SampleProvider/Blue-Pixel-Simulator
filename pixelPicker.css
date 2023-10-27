@@ -5,7 +5,10 @@
     margin-top: 8px;
     margin-right: 4px;
     border: 2px solid white;
-    border-bottom: none;
+    /* border-bottom: none; */
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 .pickerPixel {
     position: relative;

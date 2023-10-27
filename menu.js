@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         document.getElementById("menuTitle").style.transition = "1000ms ease transform";
         document.getElementById("menuTitle").style.transform = "translateY(-15vh)";
-    }, 3000);
+    }, 2000);
     setTimeout(function() {
         var menuTitleUp = true;
         document.getElementById("menuTitle").style.transition = "3000ms cubic-bezier(0.5, 0, 0.5, 1) transform";
@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 document.getElementById("menuTitle").style.transform = "translateY(-15vh)";
             }
         }, 3000);
-    }, 4000);
+    }, 3000);
     document.getElementById("menuLogo").style.animation = "menuLogo 1s 1, menuLogoGlow 3s ease infinite";
     // document.getElementById("menuLogoSP").style.animation = "menuLogoSP 1s 1";
     // document.getElementById("menuLogoText").style.animation = "menuLogoText 1s 1";
@@ -31,13 +31,13 @@ window.addEventListener("DOMContentLoaded", function() {
     }, 1000);
     setTimeout(function() {
         document.getElementById("menuTitlePixel").style.animation = "0.5s 1 menuTitleTextSlide";
-    }, 1500);
+    }, 1200);
     setTimeout(function() {
         document.getElementById("menuTitleSimulator").style.animation = "0.5s 1 menuTitleTextSlide";
-    }, 2000);
-    document.getElementById("sandboxButton").style.animation = "menuButton 5s 1";
-    document.getElementById("puzzlesButton").style.animation = "menuButton 5.5s 1";
-    document.getElementById("multiplayerButton").style.animation = "menuButton 6s 1";
+    }, 1400);
+    document.getElementById("sandboxButton").style.animation = "menuButton 4s 1";
+    document.getElementById("puzzlesButton").style.animation = "menuButton 4.5s 1";
+    document.getElementById("multiplayerButton").style.animation = "menuButton 5s 1";
 });
 
 var drawMenuCanvas = async function() {

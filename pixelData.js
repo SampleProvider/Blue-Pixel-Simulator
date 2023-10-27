@@ -6,8 +6,12 @@ var pixelIds = [
     "WATER",
     "OAK_WOOD",
     "LEAF",
+    "SAPLING",
     "MUD",
     "DRIED_MUD",
+    "GRAVEL",
+    "CLAY",
+    "SILT",
     "VINE",
     "MOSS",
     "SPONGE",
@@ -17,12 +21,17 @@ var pixelIds = [
     "FIRE",
     "SMOKE",
     "ASH",
-    "HARDENED_ASH",
+    "WET_ASH",
     "STEAM",
     "MAGMA",
     "STONE",
     "BASALT",
     "OBSIDIAN",
+    "IRON",
+    "METAL",
+    "CONCRETE_POWDER",
+    "CONCRETE",
+    // "BRICKS",
     "SNOW",
     "ICE",
     "SLUSH",
@@ -280,7 +289,12 @@ var pixels = [
         update: function(x, y) {
             if (!isTouching(x, y, 1, OAK_WOOD) && !isTouching(x, y, 1, SPRUCE_WOOD) && getTouching(x, y, 1, LEAF) == 0) {
                 if (nextIdGrid[y][x] == null) {
-                    nextIdGrid[y][x] = AIR;
+                    if (getRandom(x, y) < 0.2) {
+                        nextIdGrid[y][x] = SAPLING;
+                    }
+                    else {
+                        nextIdGrid[y][x] = AIR;
+                    }
                 }
             }
         },
@@ -293,6 +307,57 @@ var pixels = [
         rotateable: 1,
         cloneable: true,
         flammability: 20,
+        blastResistance: 1,
+    },
+    {
+        name: "Sapling",
+        description: "Plant it and see what grows!",
+        type: "A Pixel World",
+        drawBackground: 0,
+        draw: function(drawCallX1, drawCallX2, drawCallY, drawCallRotation, drawCallData, ctx) {
+            ctx.fillStyle = colors[LEAF];
+            for (var i in drawCallX1) {
+                ctx.fillRect(drawCallX1[i] * 6, drawCallY[i] * 6, (drawCallX2[i] - drawCallX1[i]) * 6, 4);
+            }
+            ctx.fillStyle = colors[OAK_WOOD][1];
+            for (var i in drawCallX1) {
+                for (var j = drawCallX1[i]; j < drawCallX2[i]; j++) {
+                    ctx.fillRect(j * 6 + 2, drawCallY[i] * 6 + 4, 2, 2);
+                }
+            }
+        },
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colors[AIR];
+            ctx.fillRect(0, 0, 6, 6);
+            ctx.fillStyle = colors[LEAF];
+            ctx.fillRect(0, 0, 6, 4);
+            ctx.fillStyle = colors[OAK_WOOD][1];
+            ctx.fillRect(2, 4, 2, 2);
+        },
+        update: function(x, y) {
+            if (y < gridSize - 1 && (idGrid[y + 1][x] == DIRT || idGrid[y + 1][x] == MUD)) {
+                if (getRandom(x, y) < 0.001) {
+                    generateTree(x, y, "oak", getRandom(x, y) * 5 + 2, 1);
+                    return;
+                }
+            }
+            if (y < gridSize - 1 && idGrid[y + 1][x] == SPONGY_RICE) {
+                if (getRandom(x, y) < 0.001) {
+                    generateTree(x, y, "spongyRice", getRandom(x, y) * 25 + 25, 5);
+                    return;
+                }
+            }
+            flow(x, y, 0);
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        density: 2,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 17,
         blastResistance: 1,
     },
     {
@@ -362,6 +427,90 @@ var pixels = [
         cloneable: true,
         flammability: 15,
         blastResistance: 2,
+    },
+    {
+        name: "Gravel",
+        description: "Weird gray rocky stuff.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colorToRGB(colors[GRAVEL]);
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            flow(x, y, 1);
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: true,
+        density: 2,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 6,
+    },
+    {
+        name: "Clay",
+        description: "Clay with a red tint.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colorToRGB(colors[CLAY]);
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            if (isTouching(x, y, 1, WATER)) {
+                if (nextIdGrid[y][x] == null) {
+                    nextIdGrid[y][x] = SILT;
+                }
+                return;
+            }
+            // if (isTouchingHeated(x, y, 1)) {
+            //     if (nextIdGrid[y][x] == null) {
+            //         nextIdGrid[y][x] = BRICKS;
+            //     }
+            //     return;
+            // }
+            flow(x, y, 1);
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: true,
+        density: 2,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 7,
+    },
+    {
+        name: "Silt",
+        description: "Wet clay.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colorToRGB(colors[SILT]);
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            flow(x, y, 2);
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: true,
+        density: 3,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 7,
     },
     {
         name: "Vine",
@@ -491,7 +640,7 @@ var pixels = [
                 if (id == SLUSH && getRandom(x, y) < 1 / 75 / distance) {
                     nextIdGrid[y1][x1] = MOSS;
                 }
-                if (id == HARDENED_ASH && getRandom(x, y) < 1 / 90 / distance) {
+                if (id == CONCRETE && getRandom(x, y) < 1 / 90 / distance) {
                     nextIdGrid[y1][x1] = MOSS;
                 }
             });
@@ -840,7 +989,7 @@ var pixels = [
         update: function(x, y) {
             if (isTouching(x, y, 1, WATER)) {
                 if (nextIdGrid[y][x] == null) {
-                    nextIdGrid[y][x] = HARDENED_ASH;
+                    nextIdGrid[y][x] = WET_ASH;
                 }
                 return;
             }
@@ -859,12 +1008,12 @@ var pixels = [
         blastResistance: 2,
     },
     {
-        name: "Hardened Ash",
-        description: "A hard, sturdy material. Made from ash.",
+        name: "Wet Ash",
+        description: "Ash that got wet.",
         type: "A Pixel World",
         drawBackground: 2,
         drawPreview: function(rotation, data, ctx) {
-            ctx.fillStyle = colorToRGB(colors[HARDENED_ASH]);
+            ctx.fillStyle = colorToRGB(colors[WET_ASH]);
             ctx.fillRect(0, 0, 6, 6);
         },
         update: function(x, y) {
@@ -874,18 +1023,19 @@ var pixels = [
                 }
                 return;
             }
+            flow(x, y, 4);
         },
         updateStage: 1,
         animationSpeed: 0,
         animationFrames: 1,
         dataFrames: 1,
         drawNoise: true,
-        density: 2,
+        density: 3,
         pushable: true,
         rotateable: 1,
         cloneable: true,
         flammability: 0,
-        blastResistance: 15,
+        blastResistance: 2,
     },
     {
         name: "Steam",
@@ -1087,6 +1237,123 @@ var pixels = [
         cloneable: true,
         flammability: 0,
         blastResistance: 20,
+    },
+    {
+        name: "Iron",
+        description: "A blob of undefined iron.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colorToRGB(colors[IRON]);
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            if (isTouching(x, y, 1, LAVA) && getRandom(x, y) < 0.005) {
+                if (nextIdGrid[y][x] == null) {
+                    nextIdGrid[y][x] = METAL;
+                }
+                return;
+            }
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: true,
+        density: 3,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 12,
+    },
+    {
+        name: "Metal",
+        description: "A piece of defined iron.",
+        type: "A Pixel World",
+        drawBackground: 1,
+        render: function(rotation, data, ctx) {
+            ctx.fillStyle = colors[METAL][1];
+            ctx.fillRect(1, 1, 4, 4);
+        },
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colors[METAL][0];
+            ctx.fillRect(0, 0, 6, 6);
+            ctx.fillStyle = colors[METAL][1];
+            ctx.fillRect(1, 1, 4, 4);
+        },
+        update: function(x, y) {
+        },
+        updateStage: -1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: false,
+        density: 3,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 12,
+    },
+    {
+        name: "Concrete Powder",
+        description: "Hardens into concrete when touching water.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colors[CONCRETE_POWDER];
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            if (isTouching(x, y, 1, WATER)) {
+                if (nextIdGrid[y][x] == null) {
+                    nextIdGrid[y][x] = CONCRETE;
+                }
+                return;
+            }
+            flow(x, y, 1);
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: false,
+        density: 2,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 5,
+    },
+    {
+        name: "Concrete",
+        description: "A hard, sturdy material.",
+        type: "A Pixel World",
+        drawBackground: 2,
+        drawPreview: function(rotation, data, ctx) {
+            ctx.fillStyle = colors[CONCRETE];
+            ctx.fillRect(0, 0, 6, 6);
+        },
+        update: function(x, y) {
+            if (isTouchingHeated(x, y, 1) && !isTouching(x, y, 1, WATER) && getRandom(x, y) < 0.1) {
+                if (nextIdGrid[y][x] == null) {
+                    nextIdGrid[y][x] = CONCRETE_POWDER;
+                }
+                return;
+            }
+        },
+        updateStage: 1,
+        animationSpeed: 0,
+        animationFrames: 1,
+        dataFrames: 1,
+        drawNoise: false,
+        density: 3,
+        pushable: true,
+        rotateable: 1,
+        cloneable: true,
+        flammability: 0,
+        blastResistance: 18,
     },
     {
         name: "Snow",

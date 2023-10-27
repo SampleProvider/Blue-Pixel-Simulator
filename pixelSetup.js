@@ -14,11 +14,6 @@ var isTouching = function(x, y, distance, pixel) {
             }
         }
     }
-    if (a != true) {
-        while (true) {
-            console.log(a);
-        }
-    }
     return false;
 };
 var getTouching = function(x, y, distance, pixel) {
@@ -719,6 +714,184 @@ var explode = function(x, y, radius, destroyPower, burnPower) {
             else if (getRandom(x, y) < (1 - (distance - 1) / Math.pow(radius, 2)) * pixels[id].flammability / 20 * burnPower) {
                 nextFireGrid[j][i] = true;
             }
+        }
+    }
+};
+var generateLine = function(x1, y1, x2, y2, radius, id, replace) {
+    var differenceX = x2 - x1;
+    var differenceY = y2 - y1;
+    if (x1 > x2) {
+        [x1, x2] = [x2, x1];
+    }
+    if (y1 > y2) {
+        [y1, y2] = [y2, y1];
+    }
+    if (Math.abs(differenceX) >= Math.abs(differenceY)) {
+        var slope = differenceY / differenceX;
+        var y = slope > 0 ? y1 : y2;
+        for (var x = Math.round(x1); x <= Math.round(x2); x++) {
+            var roundedY = Math.round(y);
+            generateCircle(x, roundedY, radius, id, replace);
+            y += slope;
+        }
+    }
+    else {
+        var slope = differenceX / differenceY;
+        var x = slope > 0 ? x1 : x2;
+        for (var y = Math.round(y1); y <= Math.round(y2); y++) {
+            var roundedX = Math.round(x);
+            generateCircle(roundedX, y, radius, id, replace);
+            x += slope;
+        }
+    }
+}
+var generateCircle = function(x1, y1, radius, id, replace) {
+    var radiusSquared = Math.pow(radius, 2);
+    for (var y = Math.max(Math.round(y1 - radius), 0); y <= Math.min(Math.round(y1 + radius), gridSize - 1); y++) {
+        for (var x = Math.max(Math.round(x1 - radius), 0); x <= Math.min(Math.round(x1 + radius), gridSize - 1); x++) {
+            if (idGrid[y][x] == AIR || replace(idGrid[y][x])) {
+                if (nextIdGrid[y][x] == null) {
+                    if (Math.pow(x - x1, 2) + Math.pow(y - y1, 2) < radiusSquared) {
+                        nextIdGrid[y][x] = id;
+                        nextRotationGrid[y][x] = 0;
+                        nextDataGrid[y][x] = 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+var generateTree = function(x, y, type, length, width) {
+    var queue = [
+        {
+            x: x,
+            y: y,
+            length: length,
+            width: width,
+            angle: 270,
+        }
+    ];
+    var woodPixel = null;
+    var leafPixel = null;
+    switch (type) {
+        case "oak":
+            woodPixel = OAK_WOOD;
+            leafPixel = LEAF;
+            break;
+        case "spruce":
+            woodPixel = SPRUCE_WOOD;
+            leafPixel = LEAF;
+            break;
+        case "spongyRice":
+            woodPixel = SPONGY_RICE;
+            leafPixel = PINK_SAND;
+            break;
+    }
+    while (queue.length > 0) {
+        var branch = queue.shift();
+        var x = branch.x + branch.length * Math.cos(branch.angle / 180 * Math.PI);
+        var y = branch.y + branch.length * Math.sin(branch.angle / 180 * Math.PI);
+        switch (type) {
+            case "oak":
+                generateLine(branch.x, branch.y, x, y, branch.width, woodPixel, function(id) {
+                    if (id == LEAF || id == SAPLING) {
+                        return true;
+                    }
+                    return false;
+                });
+                if (branch.length >= 4) {
+                    if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                        var scaleFactor1 = (0.6 + getRandom(x, y) * 0.2);
+                        var scaleFactor2 = (0.6 + getRandom(x, y) * 0.2);
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor1,
+                            width: Math.max(branch.width * scaleFactor1, 1),
+                            angle: branch.angle - 15 - getRandom(x, y) * 30,
+                        });
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor2,
+                            width: Math.max(branch.width * scaleFactor2, 1),
+                            angle: branch.angle + 15 + getRandom(x, y) * 30,
+                        });
+                    }
+                }
+                else {
+                    generateCircle(x, y, branch.length * 3 / 4 + getRandom(x, y) * 0.5, leafPixel, function(id) {
+                        return false;
+                    });
+                }
+                break;
+            case "spruce":
+                generateLine(branch.x, branch.y, x, y, branch.width, woodPixel, function(id) {
+                    if (id == LEAF || id == SAPLING) {
+                        return true;
+                    }
+                    return false;
+                });
+                if (branch.length >= 6) {
+                    if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                        var scaleFactor1 = (0.6 + getRandom(x, y) * 0.2);
+                        var scaleFactor2 = (0.6 + getRandom(x, y) * 0.2);
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor1,
+                            width: Math.max(branch.width * scaleFactor1, 1),
+                            angle: branch.angle - 15 - getRandom(x, y) * 30,
+                        });
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor2,
+                            width: Math.max(branch.width * scaleFactor2, 1),
+                            angle: branch.angle + 15 + getRandom(x, y) * 30,
+                        });
+                    }
+                }
+                else {
+                    generateCircle(x, y, branch.length / 2 + getRandom(x, y) * 0.5, leafPixel, function(id) {
+                        return false;
+                    });
+                }
+                break;
+            case "spongyRice":
+                generateLine(branch.x, branch.y, x, y, branch.width, woodPixel, function(id) {
+                    return true;
+                });
+                if (branch.length >= 6) {
+                    if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+                        var scaleFactor1 = (0.6 + getRandom(x, y) * 0.2);
+                        var scaleFactor2 = (0.6 + getRandom(x, y) * 0.2);
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor1,
+                            width: Math.max(branch.width * scaleFactor1, 1),
+                            angle: branch.angle - 15 - getRandom(x, y) * 30,
+                        });
+                        queue.push({
+                            x: x,
+                            y: y,
+                            length: branch.length * scaleFactor2,
+                            width: Math.max(branch.width * scaleFactor2, 1),
+                            angle: branch.angle + 15 + getRandom(x, y) * 30,
+                        });
+                    }
+                }
+                else {
+                    generateCircle(x, y, branch.length / 2 + getRandom(x, y) * 0.5, leafPixel, function(id) {
+                        if (id != SPONGY_RICE) {
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+                break;
         }
     }
 };
